@@ -63,7 +63,6 @@ function renderDimensions() {
 }
 
 function renderLanguageControl() {
-  byId("language-current").textContent = window.MODESKILL_I18N[language].languageNames[language];
   byId("language-trigger").setAttribute("aria-label", t("languageMenuLabel"));
   byId("language-menu").replaceChildren(...supportedLanguages.map((value) => {
     const button = document.createElement("button");
