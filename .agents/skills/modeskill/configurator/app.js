@@ -37,7 +37,9 @@ function applyLanguage(nextLanguage, persist = true) {
   if (persist) localStorage.setItem("modeskill-language", language);
   document.querySelectorAll("[data-i18n]").forEach((element) => { element.textContent = t(element.dataset.i18n); });
   document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => { element.placeholder = t(element.dataset.i18nPlaceholder); });
+  document.querySelectorAll("[data-i18n-aria-label]").forEach((element) => { element.setAttribute("aria-label", t(element.dataset.i18nAriaLabel)); });
   document.title = t("pageTitle");
+  renderLanguageControl();
   renderDimensions();
   renderModules();
   renderStatus();
@@ -58,6 +60,35 @@ function renderDimensions() {
     label.append(input, text);
     return label;
   }));
+}
+
+function renderLanguageControl() {
+  byId("language-current").textContent = window.MODESKILL_I18N[language].languageNames[language];
+  byId("language-trigger").setAttribute("aria-label", t("languageMenuLabel"));
+  byId("language-menu").replaceChildren(...supportedLanguages.map((value) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.role = "menuitemradio";
+    button.className = "language-option";
+    button.dataset.language = value;
+    button.setAttribute("aria-checked", String(value === language));
+    button.textContent = window.MODESKILL_I18N[language].languageNames[value];
+    button.addEventListener("click", () => {
+      applyLanguage(value);
+      closeLanguageMenu();
+      byId("language-trigger").focus();
+    });
+    return button;
+  }));
+}
+
+function setLanguageMenu(open) {
+  byId("language-menu").hidden = !open;
+  byId("language-trigger").setAttribute("aria-expanded", String(open));
+}
+
+function closeLanguageMenu() {
+  setLanguageMenu(false);
 }
 
 function setStatus(key, parameters = {}) {
@@ -215,6 +246,10 @@ async function toggleModule(moduleId, enabled) {
 }
 
 byId("language").addEventListener("change", (event) => applyLanguage(event.target.value));
+byId("language-trigger").addEventListener("click", () => setLanguageMenu(byId("language-menu").hidden));
+document.addEventListener("pointerdown", (event) => {
+  if (!event.target.closest(".language")) closeLanguageMenu();
+});
 byId("discover").addEventListener("click", () => withBusyState(byId("discover"), "discovering", async () => {
   try {
     const result = await request("/api/discover", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(configuration()) });
@@ -295,7 +330,12 @@ function updateHelpButtons() {
 }
 
 document.querySelectorAll(".help-button").forEach(initializeHelpButton);
-document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeHelpTooltips(); });
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape") {
+    closeHelpTooltips();
+    closeLanguageMenu();
+  }
+});
 document.addEventListener("input", updateJson);
 function updateJson() { byId("json-output").textContent = JSON.stringify(configuration(), null, 2); }
 

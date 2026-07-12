@@ -4,12 +4,20 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title data-i18n="pageTitle"></title>
+  <link rel="icon" type="image/png" href="/images/favicon-skill-0712.png">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header>
-    <div class="header-copy"><span class="eyebrow" data-i18n="localConfigurator"></span><h1 data-i18n="pageTitle"></h1><p data-i18n="pageSubtitle"></p></div>
-    <label class="language"><span data-i18n="languageLabel"></span><select id="language"></select></label>
+    <div class="header-copy"><img class="brand-logo" src="/images/logo-skill-0712.png" alt="Modeskill"><h1 class="visually-hidden" data-i18n="pageTitle"></h1><span class="eyebrow" data-i18n="localConfigurator"></span><p data-i18n="pageSubtitle"></p></div>
+    <div class="language">
+      <span class="visually-hidden" data-i18n="languageLabel"></span>
+      <select id="language" class="visually-hidden" data-i18n-aria-label="languageLabel"></select>
+      <button id="language-trigger" class="language-trigger" type="button" aria-haspopup="menu" aria-expanded="false">
+        <span class="globe-icon" aria-hidden="true"></span><span id="language-current"></span><span class="chevron" aria-hidden="true"></span>
+      </button>
+      <div id="language-menu" class="language-menu" role="menu" hidden></div>
+    </div>
   </header>
   <main>
     <section class="section-card">

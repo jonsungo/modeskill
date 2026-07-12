@@ -148,6 +148,19 @@ class Handler(BaseHTTPRequestHandler):
             if path == "/api/modules":
                 self._json(200, modules_payload())
                 return
+            image_name = {
+                "/images/logo-skill-0712.png": "logo-skill-0712.png",
+                "/images/favicon-skill-0712.png": "favicon-skill-0712.png",
+            }.get(path)
+            if image_name:
+                data = (SKILL_DIR / "images" / image_name).read_bytes()
+                self.send_response(200)
+                self.send_header("Content-Type", "image/png")
+                self.send_header("Content-Length", str(len(data)))
+                self.send_header("X-Content-Type-Options", "nosniff")
+                self.end_headers()
+                self.wfile.write(data)
+                return
             filename = {"/": "index.html", "/app.js": "app.js", "/i18n.js": "i18n.js", "/styles.css": "styles.css"}.get(path)
             if not filename:
                 raise ApiError(404, "not_found")
