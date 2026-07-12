@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title data-i18n="pageTitle"></title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <div><h1 data-i18n="pageTitle"></h1><p data-i18n="pageSubtitle"></p></div>
+    <label class="language"><span data-i18n="languageLabel"></span><select id="language"></select></label>
+  </header>
+  <main>
+    <section>
+      <h2 data-i18n="workspaceHeading"></h2>
+      <div class="grid">
+        <label><span data-i18n="workspaceName"></span><input id="workspace-name" value="modelab-workspace"></label>
+        <label><span data-i18n="workspaceRoot"></span><input id="workspace-root" data-i18n-placeholder="workspaceRootPlaceholder"></label>
+        <label><span class="label-line"><span data-i18n="maxDepth"></span><button class="help-button" type="button" data-help-key="maxDepth" aria-expanded="false">?</button></span><input id="max-depth" type="number" min="0" max="20" value="4"></label>
+      </div>
+      <div class="checks">
+        <label><input id="recursive" type="checkbox" checked><span data-i18n="recursive"></span></label>
+        <label><input id="root-project" type="checkbox"><span data-i18n="rootProject"></span></label>
+        <label><input id="continue-below" type="checkbox" checked><span data-i18n="continueBelow"></span></label>
+      </div>
+      <label><span class="label-line"><span data-i18n="markers"></span><button class="help-button" type="button" data-help-key="projectMarkers" aria-expanded="false">?</button></span><textarea id="markers" rows="3">.git, package.json, composer.json, pyproject.toml, Cargo.toml, go.mod, pom.xml, build.gradle</textarea></label>
+      <label><span class="label-line"><span data-i18n="includes"></span><button class="help-button" type="button" data-help-key="includePatterns" aria-expanded="false">?</button></span><textarea id="includes" rows="2">**</textarea></label>
+      <label><span class="label-line"><span data-i18n="excludes"></span><button class="help-button" type="button" data-help-key="excludePatterns" aria-expanded="false">?</button></span><textarea id="excludes" rows="2">**/.cache/**</textarea></label>
+      <label><span data-i18n="manualProjects"></span><small data-i18n="manualHint"></small><textarea id="manual-projects" rows="3"></textarea></label>
+    </section>
+    <section>
+      <div class="section-title"><h2 data-i18n="projectRoles"></h2><button id="discover" type="button" data-i18n="rediscover"></button></div>
+      <p id="discovery-status" role="status" data-i18n="noDiscovery"></p>
+      <div id="project-list" class="project-list"></div>
+      <div class="grid">
+        <label><span class="label-line"><span data-i18n="primaryReference"></span><button class="help-button" type="button" data-help-key="primaryReference" aria-expanded="false">?</button></span><select id="primary-reference"></select></label>
+        <label><span class="label-line"><span data-i18n="secondaryReferences"></span><button class="help-button" type="button" data-help-key="secondaryReferences" aria-expanded="false">?</button></span><select id="secondary-references" multiple></select></label>
+        <label><span class="label-line"><span data-i18n="targetProject"></span><button class="help-button" type="button" data-help-key="targetProject" aria-expanded="false">?</button></span><select id="target-project"></select></label>
+      </div>
+    </section>
+    <section><h2 data-i18n="analysisDimensions"></h2><div id="dimensions" class="checks"></div></section>
+    <section>
+      <h2 data-i18n="permissions"></h2>
+      <div class="checks permission-list">
+        <label><input type="checkbox" checked disabled><span data-i18n="referenceReadonly"></span></label>
+        <label><input type="checkbox" checked disabled><span data-i18n="targetReadonly"></span></label>
+        <label><input id="allow-write-request" type="checkbox"><span data-i18n="allowWriteRequest"></span><button class="help-button" type="button" data-help-key="explicitAuthorization" aria-expanded="false">?</button></label>
+      </div>
+      <p data-i18n="writeExplanation"></p>
+    </section>
+    <section>
+      <h2 data-i18n="modulesHeading"></h2>
+      <p data-i18n="gitPolicy"></p>
+      <p data-i18n="localModuleOptional"></p>
+      <div id="module-list" class="module-list"></div>
+      <div class="path-row"><strong data-i18n="localModuleLocation"></strong><code id="local-modules-path"></code><button id="copy-modules-path" type="button" data-i18n="copyPath"></button></div>
+      <p class="warning" data-i18n="backupWarning"></p>
+    </section>
+    <section>
+      <h2 data-i18n="actions"></h2>
+      <div class="actions"><button id="validate" type="button" data-i18n="validate"></button><button id="save" class="primary" type="button" data-i18n="save"></button></div>
+      <p id="message" role="status"></p>
+      <details><summary data-i18n="jsonPreview"></summary><pre id="json-output"></pre></details>
+    </section>
+  </main>
+  <script src="i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

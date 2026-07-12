@@ -1,0 +1,19 @@
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(23, 32, 51, 0.48);
+}
+
+.modal {
+  max-width: 560px;
+  margin: 8vh auto;
+  padding: var(--space-6);
+  border-radius: 8px;
+  background: var(--color-surface);
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+}

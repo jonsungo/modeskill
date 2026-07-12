@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reference Project</title>
+  <link rel="stylesheet" href="src/styles/tokens.css">
+  <link rel="stylesheet" href="src/components/Button.css">
+  <link rel="stylesheet" href="src/components/Form.css">
+  <link rel="stylesheet" href="src/components/Modal.css">
+  <link rel="stylesheet" href="src/pages/Dashboard.css">
+</head>
+<body>
+  <main class="dashboard">
+    <aside><strong>Reference</strong></aside>
+    <section class="dashboard-main">
+      <header><h1>Review dashboard</h1><p>Shared semantic patterns for related products.</p></header>
+      <div class="button-row">
+        <button class="button button-primary" id="open-dialog" type="button">Open review</button>
+        <button class="button button-secondary" type="button">Secondary action</button>
+        <button class="button button-secondary" type="button" disabled>Unavailable</button>
+      </div>
+      <form>
+        <div class="field">
+          <label class="field-label" for="reference-name">Project name</label>
+          <input class="input" id="reference-name" required aria-describedby="reference-help reference-error">
+          <span class="field-help" id="reference-help">Use the shared project name.</span>
+          <span class="field-error" id="reference-error" role="alert">A project name is required.</span>
+        </div>
+      </form>
+    </section>
+  </main>
+  <div class="modal-overlay" id="dialog-overlay" hidden>
+    <section class="modal" id="review-dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1">
+      <h2 id="dialog-title">Review consistency</h2>
+      <p>Confirm the evidence before implementation.</p>
+      <div class="modal-actions"><button class="button button-secondary" id="close-dialog" type="button">Close</button></div>
+    </section>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

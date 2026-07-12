@@ -1,0 +1,23 @@
+.dashboard {
+  min-height: 100vh;
+  padding: var(--space-6);
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--space-6);
+}
+
+.dashboard-main {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.dashboard-filter {
+  margin-bottom: 10px;
+}
+
+@media (max-width: 820px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    padding: var(--space-4);
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "0.1",
+  "modules": [
+    {
+      "id": "ui-consistency",
+      "display_name": {
+        "zh-CN": "UI 一致性",
+        "en": "UI consistency"
+      },
+      "description": {
+        "zh-CN": "跨项目比较界面规范、交互和工程约定。",
+        "en": "Compare UI conventions, interactions, and engineering patterns across projects."
+      },
+      "distribution": "git-synced",
+      "implemented": true,
+      "enabled": true,
+      "path": "ui-consistency",
+      "entry": "references/consistency-methodology.md"
+    }
+  ]
+}

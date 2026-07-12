@@ -1,0 +1,19 @@
+.dashboard {
+  min-height: 100vh;
+  padding: var(--space-6);
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: var(--space-6);
+}
+
+.dashboard-main {
+  display: grid;
+  gap: var(--space-4);
+}
+
+@media (max-width: 760px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+    padding: var(--space-4);
+  }
+}

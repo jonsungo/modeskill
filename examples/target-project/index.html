@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Target Project</title>
+  <link rel="stylesheet" href="src/styles/tokens.css">
+  <link rel="stylesheet" href="src/components/Button.css">
+  <link rel="stylesheet" href="src/components/Form.css">
+  <link rel="stylesheet" href="src/components/Modal.css">
+  <link rel="stylesheet" href="src/pages/Dashboard.css">
+</head>
+<body>
+  <main class="dashboard">
+    <aside><strong>Target</strong></aside>
+    <section class="dashboard-main">
+      <header><h1>Approval workspace</h1><p>Shared behavior with an adapted brand accent.</p></header>
+      <div class="target-review-status" aria-label="Target-specific review status">Ready for review</div>
+      <div class="button-row">
+        <button class="button button-primary" id="open-dialog" type="button">Open approval</button>
+        <button class="button button-secondary" type="button">Secondary action</button>
+        <button class="button button-secondary" type="button" disabled>Unavailable</button>
+      </div>
+      <form>
+        <div class="field">
+          <label class="field-label" for="target-name">Approval name</label>
+          <input class="input" id="target-name" required aria-describedby="target-help target-error">
+          <span class="field-help" id="target-help">Name this approval workflow.</span>
+          <span class="field-error" id="target-error" role="alert">An approval name is required.</span>
+        </div>
+      </form>
+    </section>
+  </main>
+  <div class="modal-overlay" id="dialog-overlay" hidden>
+    <section class="modal" id="review-dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" tabindex="-1">
+      <h2 id="dialog-title">Approve changes</h2>
+      <p>This wider dialog is a target-specific workflow adaptation.</p>
+      <div class="modal-actions"><button class="button button-secondary" id="close-dialog" type="button">Close</button></div>
+    </section>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

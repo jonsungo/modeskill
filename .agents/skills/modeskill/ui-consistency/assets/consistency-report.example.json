@@ -1,0 +1,18 @@
+{
+  "$schema": "../schemas/consistency-report.schema.json",
+  "schemaVersion": "0.1",
+  "workspace": "modeskill-examples",
+  "reference_sources": ["reference-project/index.html", "reference-project/src/styles/tokens.css", "reference-project/app.js"],
+  "summary": { "inherited": 1, "adapted": 1, "project-specific": 1, "unresolved": 1, "deprecated": 1 },
+  "conclusions": [
+    { "classification": "inherited", "dimension": "typography", "title": "Typography foundation is inherited", "rationale": "Both projects use the same semantic font and scale tokens.", "confidence": "high", "evidence": [{ "source_file": "target-project/src/styles/tokens.css", "locator": "--font-sans", "evidence_type": "cross-project" }] },
+    { "classification": "adapted", "dimension": "color semantics", "title": "Primary accent is adapted", "rationale": "The target preserves the semantic role with a local brand value.", "confidence": "high", "evidence": [{ "source_file": "target-project/src/styles/tokens.css", "locator": "--color-primary", "evidence_type": "token" }] },
+    { "classification": "project-specific", "dimension": "modal behavior", "title": "Review dialog is wider", "rationale": "The target review workflow needs additional content width without changing dialog semantics.", "confidence": "medium", "evidence": [{ "source_file": "target-project/src/components/Modal.css", "locator": ".modal", "evidence_type": "shared-component" }] },
+    { "classification": "unresolved", "dimension": "responsive behavior", "title": "Global breakpoint policy is unresolved", "rationale": "One simulated page per project is insufficient for a global policy.", "confidence": "low", "evidence": [{ "source_file": "target-project/src/pages/Dashboard.css", "locator": "@media (max-width: 820px)", "evidence_type": "inferred" }] },
+    { "classification": "deprecated", "dimension": "engineering conventions", "title": "Legacy inline form must not propagate", "rationale": "The target source explicitly marks it as replaced.", "confidence": "high", "evidence": [{ "source_file": "target-project/src/components/Form.css", "locator": ".legacy-inline-form", "evidence_type": "authoritative" }] }
+  ],
+  "implementation_recommendations": ["Retain shared semantics while documenting target brand and workflow adaptations."],
+  "affected_files": ["target-project/src/styles/tokens.css", "target-project/src/components/Modal.css"],
+  "risk_level": "low",
+  "write_authorization_status": "read-only"
+}

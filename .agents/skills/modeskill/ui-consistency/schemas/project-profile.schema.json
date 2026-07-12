@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://modelab.local/modeskill/project-profile.schema.json",
+  "title": "Modeskill UI Project Profile",
+  "type": "object",
+  "required": ["schemaVersion", "project", "technology_stack", "source_files", "design_tokens", "typography", "color_semantics", "spacing", "components", "interaction_patterns", "responsive_behavior", "engineering_conventions", "evidence", "confidence", "unresolved_issues", "generation_metadata"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string", "minLength": 1 },
+    "schemaVersion": { "const": "0.1" },
+    "project": { "$ref": "#/$defs/project" },
+    "technology_stack": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "source_files": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/source" } },
+    "design_tokens": { "$ref": "#/$defs/findings" },
+    "typography": { "$ref": "#/$defs/findings" },
+    "color_semantics": { "$ref": "#/$defs/findings" },
+    "spacing": { "$ref": "#/$defs/findings" },
+    "components": { "$ref": "#/$defs/findings" },
+    "interaction_patterns": { "$ref": "#/$defs/findings" },
+    "responsive_behavior": { "$ref": "#/$defs/findings" },
+    "engineering_conventions": { "$ref": "#/$defs/findings" },
+    "evidence": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/evidence" } },
+    "confidence": { "enum": ["high", "medium", "low"] },
+    "unresolved_issues": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "generation_metadata": {
+      "type": "object",
+      "required": ["generated_at", "generator", "mode"],
+      "additionalProperties": false,
+      "properties": {
+        "generated_at": { "type": "string", "minLength": 1 },
+        "generator": { "type": "string", "minLength": 1 },
+        "mode": { "const": "read-only" }
+      }
+    }
+  },
+  "$defs": {
+    "project": {
+      "type": "object",
+      "required": ["id", "name", "path", "role"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "role": { "enum": ["primary-reference", "secondary-reference", "target"] }
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["path", "kind", "priority"],
+      "additionalProperties": false,
+      "properties": {
+        "path": { "type": "string", "minLength": 1 },
+        "kind": { "enum": ["documentation", "tokens", "component", "interaction", "page", "configuration", "other"] },
+        "priority": { "type": "integer", "minimum": 1, "maximum": 6 }
+      }
+    },
+    "findings": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/finding" } },
+    "finding": {
+      "type": "object",
+      "required": ["title", "rationale", "classification", "confidence", "evidence"],
+      "additionalProperties": false,
+      "properties": {
+        "title": { "type": "string", "minLength": 1 },
+        "rationale": { "type": "string", "minLength": 1 },
+        "classification": { "$ref": "#/$defs/classification" },
+        "confidence": { "enum": ["high", "medium", "low"] },
+        "evidence": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/evidence" } }
+      }
+    },
+    "classification": { "enum": ["inherited", "adapted", "project-specific", "unresolved", "deprecated"] },
+    "evidence": {
+      "type": "object",
+      "required": ["source_file", "locator", "evidence_type", "confidence", "classification", "user_designated"],
+      "additionalProperties": false,
+      "properties": {
+        "source_file": { "type": "string", "minLength": 1 },
+        "selector": { "type": "string", "minLength": 1 },
+        "component": { "type": "string", "minLength": 1 },
+        "token": { "type": "string", "minLength": 1 },
+        "locator": {
+          "type": "object",
+          "required": ["type", "value"],
+          "additionalProperties": false,
+          "properties": {
+            "type": { "enum": ["line", "selector", "component", "token", "symbol", "section", "other"] },
+            "value": { "type": "string", "minLength": 1 }
+          }
+        },
+        "evidence_type": { "enum": ["authoritative", "token", "shared-component", "cross-project", "repeated", "inferred"] },
+        "confidence": { "enum": ["high", "medium", "low"] },
+        "classification": { "$ref": "#/$defs/classification" },
+        "user_designated": { "type": "boolean" }
+      }
+    }
+  }
+}

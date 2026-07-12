@@ -1,0 +1,23 @@
+{
+  "$schema": "../schemas/project-profile.schema.json",
+  "schemaVersion": "0.1",
+  "project": { "id": "target-project", "name": "Target Project", "path": "target-project", "role": "target" },
+  "technology_stack": ["HTML", "CSS", "JavaScript"],
+  "source_files": [
+    { "path": "target-project/index.html", "kind": "page", "priority": 4 },
+    { "path": "target-project/app.js", "kind": "interaction", "priority": 4 },
+    { "path": "target-project/src/styles/tokens.css", "kind": "tokens", "priority": 2 }
+  ],
+  "design_tokens": [{ "title": "Semantic tokens are explicit", "rationale": "The target names color, type, and spacing roles.", "classification": "inherited", "confidence": "high", "evidence": [{ "source_file": "target-project/src/styles/tokens.css", "token": "--color-primary", "locator": { "type": "token", "value": "--color-primary" }, "evidence_type": "token", "confidence": "high", "classification": "inherited", "user_designated": false }] }],
+  "typography": [{ "title": "Typography foundation is inherited", "rationale": "Reference and target use the same font and type scale tokens.", "classification": "inherited", "confidence": "high", "evidence": [{ "source_file": "target-project/src/styles/tokens.css", "token": "--font-sans", "locator": { "type": "token", "value": "--font-sans" }, "evidence_type": "cross-project", "confidence": "high", "classification": "inherited", "user_designated": false }] }],
+  "color_semantics": [{ "title": "Primary color is adapted", "rationale": "The semantic role is retained with a target brand value.", "classification": "adapted", "confidence": "high", "evidence": [{ "source_file": "target-project/src/styles/tokens.css", "token": "--color-primary", "locator": { "type": "token", "value": "--color-primary" }, "evidence_type": "token", "confidence": "high", "classification": "adapted", "user_designated": false }] }],
+  "spacing": [{ "title": "Spacing scale is inherited", "rationale": "Shared spacing token names and values are retained.", "classification": "inherited", "confidence": "high", "evidence": [{ "source_file": "target-project/src/styles/tokens.css", "token": "--space-4", "locator": { "type": "token", "value": "--space-4" }, "evidence_type": "cross-project", "confidence": "high", "classification": "inherited", "user_designated": false }] }],
+  "components": [{ "title": "Button density is adapted", "rationale": "Variants remain consistent while target buttons are denser.", "classification": "adapted", "confidence": "medium", "evidence": [{ "source_file": "target-project/src/components/Button.css", "selector": ".button", "component": "Button", "locator": { "type": "selector", "value": ".button" }, "evidence_type": "shared-component", "confidence": "medium", "classification": "adapted", "user_designated": false }] }],
+  "interaction_patterns": [{ "title": "Dialog interaction is inherited", "rationale": "The target supports Escape, overlay dismissal, and focus restoration.", "classification": "inherited", "confidence": "high", "evidence": [{ "source_file": "target-project/app.js", "component": "Modal", "locator": { "type": "symbol", "value": "closeModal" }, "evidence_type": "cross-project", "confidence": "high", "classification": "inherited", "user_designated": false }] }],
+  "responsive_behavior": [{ "title": "Global breakpoint policy remains unresolved", "rationale": "Only a small simulated page set is available.", "classification": "unresolved", "confidence": "low", "evidence": [{ "source_file": "target-project/src/pages/Dashboard.css", "locator": { "type": "section", "value": "@media (max-width: 820px)" }, "evidence_type": "inferred", "confidence": "low", "classification": "unresolved", "user_designated": false }] }],
+  "engineering_conventions": [{ "title": "Legacy inline form is deprecated", "rationale": "A source comment explicitly names the replacement.", "classification": "deprecated", "confidence": "high", "evidence": [{ "source_file": "target-project/src/components/Form.css", "selector": ".legacy-inline-form", "locator": { "type": "selector", "value": ".legacy-inline-form" }, "evidence_type": "authoritative", "confidence": "high", "classification": "deprecated", "user_designated": false }] }],
+  "evidence": [{ "source_file": "target-project/index.html", "component": "Modal", "locator": { "type": "component", "value": "review-dialog" }, "evidence_type": "shared-component", "confidence": "high", "classification": "project-specific", "user_designated": false }],
+  "confidence": "medium",
+  "unresolved_issues": ["A simulated project cannot establish a production-wide breakpoint policy."],
+  "generation_metadata": { "generated_at": "2026-07-12T00:00:00Z", "generator": "modeskill v0.1 example", "mode": "read-only" }
+}

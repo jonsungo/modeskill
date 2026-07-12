@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://modelab.local/modeskill/consistency-report.schema.json",
+  "title": "Modeskill UI Consistency Report",
+  "type": "object",
+  "required": ["schemaVersion", "workspace", "reference_sources", "summary", "conclusions", "implementation_recommendations", "affected_files", "risk_level", "write_authorization_status"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string", "minLength": 1 },
+    "schemaVersion": { "const": "0.1" },
+    "workspace": { "type": "string", "minLength": 1 },
+    "reference_sources": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "summary": { "$ref": "#/$defs/summary" },
+    "conclusions": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/conclusion" } },
+    "implementation_recommendations": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "affected_files": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+    "risk_level": { "enum": ["low", "medium", "high"] },
+    "write_authorization_status": { "enum": ["read-only", "eligible-explicit-per-task", "authorized-current-task"] }
+  },
+  "$defs": {
+    "summary": {
+      "type": "object",
+      "required": ["inherited", "adapted", "project-specific", "unresolved", "deprecated"],
+      "additionalProperties": false,
+      "properties": {
+        "inherited": { "type": "integer", "minimum": 0 },
+        "adapted": { "type": "integer", "minimum": 0 },
+        "project-specific": { "type": "integer", "minimum": 0 },
+        "unresolved": { "type": "integer", "minimum": 0 },
+        "deprecated": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "conclusion": {
+      "type": "object",
+      "required": ["classification", "dimension", "title", "rationale", "confidence", "evidence"],
+      "additionalProperties": false,
+      "properties": {
+        "classification": { "enum": ["inherited", "adapted", "project-specific", "unresolved", "deprecated"] },
+        "dimension": { "enum": ["typography", "color semantics", "spacing", "components", "forms", "modal behavior", "responsive behavior", "engineering conventions"] },
+        "title": { "type": "string", "minLength": 1 },
+        "rationale": { "type": "string", "minLength": 1 },
+        "confidence": { "enum": ["high", "medium", "low"] },
+        "evidence": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "$ref": "#/$defs/evidence" } }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["source_file", "locator", "evidence_type"],
+      "additionalProperties": false,
+      "properties": {
+        "source_file": { "type": "string", "minLength": 1 },
+        "locator": { "type": "string", "minLength": 1 },
+        "evidence_type": { "enum": ["authoritative", "token", "shared-component", "cross-project", "repeated", "inferred"] }
+      }
+    }
+  }
+}

@@ -1,0 +1,113 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://modelab.local/modeskill/workspace.schema.json",
+  "title": "Modeskill Workspace Configuration",
+  "type": "object",
+  "required": ["schemaVersion", "workspace", "discovery", "manual_projects", "discovery_cache", "roles", "analysis", "authorization", "authority_mapping", "allowed_variations"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string", "minLength": 1 },
+    "schemaVersion": { "const": "0.1" },
+    "workspace": {
+      "type": "object",
+      "required": ["name", "root", "access_mode"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "root": { "type": "string", "minLength": 1 },
+        "access_mode": { "const": "read-only" }
+      }
+    },
+    "discovery": {
+      "type": "object",
+      "required": ["automatic", "recursive", "max_depth", "treat_workspace_root_as_project", "continue_below_repository_root", "project_markers", "include_patterns", "exclude_patterns", "excluded_directories"],
+      "additionalProperties": false,
+      "properties": {
+        "automatic": { "type": "boolean" },
+        "recursive": { "type": "boolean" },
+        "max_depth": { "type": "integer", "minimum": 0, "maximum": 20 },
+        "treat_workspace_root_as_project": { "type": "boolean" },
+        "continue_below_repository_root": { "type": "boolean" },
+        "project_markers": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "include_patterns": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "exclude_patterns": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "excluded_directories": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+      }
+    },
+    "manual_projects": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/manualProject" } },
+    "discovery_cache": {
+      "type": "object",
+      "required": ["discovered_at", "discovered_projects"],
+      "additionalProperties": false,
+      "properties": {
+        "discovered_at": { "type": "string", "minLength": 1 },
+        "discovered_projects": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/discoveredProject" } }
+      }
+    },
+    "roles": {
+      "type": "object",
+      "required": ["primary_reference", "secondary_references", "target_project"],
+      "additionalProperties": false,
+      "properties": {
+        "primary_reference": { "type": "string", "minLength": 1 },
+        "secondary_references": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "target_project": { "type": "string", "minLength": 1 }
+      }
+    },
+    "analysis": {
+      "type": "object",
+      "required": ["dimensions", "classifications", "require_evidence"],
+      "additionalProperties": false,
+      "properties": {
+        "dimensions": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "enum": ["typography", "color semantics", "spacing", "components", "forms", "modal behavior", "responsive behavior", "engineering conventions"] } },
+        "classifications": { "type": "array", "minItems": 5, "maxItems": 5, "uniqueItems": true, "items": { "enum": ["inherited", "adapted", "project-specific", "unresolved", "deprecated"] } },
+        "require_evidence": { "const": true }
+      }
+    },
+    "authorization": {
+      "type": "object",
+      "required": ["workspace_access", "reference_access", "target_default_access", "target_write_policy"],
+      "additionalProperties": false,
+      "properties": {
+        "workspace_access": { "const": "read-only" },
+        "reference_access": { "const": "read-only" },
+        "target_default_access": { "const": "read-only" },
+        "target_write_policy": { "enum": ["disabled", "explicit-per-task"] }
+      }
+    },
+    "authority_mapping": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/authority" } },
+    "allowed_variations": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } }
+  },
+  "$defs": {
+    "manualProject": {
+      "type": "object",
+      "required": ["name", "path"],
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 }
+      }
+    },
+    "discoveredProject": {
+      "type": "object",
+      "required": ["id", "name", "path", "markers", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "minLength": 1 },
+        "name": { "type": "string", "minLength": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "markers": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "source": { "enum": ["automatic", "manual"] }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "required": ["source", "scope"],
+      "additionalProperties": false,
+      "properties": {
+        "source": { "type": "string", "minLength": 1 },
+        "scope": { "enum": ["workspace", "project", "dimension"] }
+      }
+    }
+  }
+}

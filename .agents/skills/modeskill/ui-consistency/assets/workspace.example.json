@@ -1,0 +1,51 @@
+{
+  "$schema": "../../../shared/schemas/workspace.schema.json",
+  "schemaVersion": "0.1",
+  "workspace": {
+    "name": "modeskill-examples",
+    "root": "../../../../../examples",
+    "access_mode": "read-only"
+  },
+  "discovery": {
+    "automatic": true,
+    "recursive": true,
+    "max_depth": 3,
+    "treat_workspace_root_as_project": false,
+    "continue_below_repository_root": true,
+    "project_markers": [".git", "package.json", "composer.json", "pyproject.toml", "Cargo.toml", "go.mod", "pom.xml", "build.gradle"],
+    "include_patterns": ["**"],
+    "exclude_patterns": ["**/.cache/**"],
+    "excluded_directories": [".git", "node_modules", "vendor", "dist", "build", ".next", "coverage", "__pycache__", ".venv", "tmp", "temp", ".cache"]
+  },
+  "manual_projects": [
+    { "name": "Reference Project", "path": "reference-project" },
+    { "name": "Target Project", "path": "target-project" }
+  ],
+  "discovery_cache": {
+    "discovered_at": "2026-07-12T00:00:00Z",
+    "discovered_projects": [
+      { "id": "reference-project", "name": "Reference Project", "path": "reference-project", "markers": ["index.html+source"], "source": "automatic" },
+      { "id": "target-project", "name": "Target Project", "path": "target-project", "markers": ["index.html+source"], "source": "automatic" }
+    ]
+  },
+  "roles": {
+    "primary_reference": "reference-project",
+    "secondary_references": [],
+    "target_project": "target-project"
+  },
+  "analysis": {
+    "dimensions": ["typography", "color semantics", "spacing", "components", "forms", "modal behavior", "responsive behavior", "engineering conventions"],
+    "classifications": ["inherited", "adapted", "project-specific", "unresolved", "deprecated"],
+    "require_evidence": true
+  },
+  "authorization": {
+    "workspace_access": "read-only",
+    "reference_access": "read-only",
+    "target_default_access": "read-only",
+    "target_write_policy": "explicit-per-task"
+  },
+  "authority_mapping": [
+    { "source": "reference-project/src/styles/tokens.css", "scope": "project" }
+  ],
+  "allowed_variations": ["Target brand accent", "Target review modal width"]
+}
