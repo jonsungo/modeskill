@@ -8,12 +8,12 @@
 </head>
 <body>
   <header>
-    <div><h1 data-i18n="pageTitle"></h1><p data-i18n="pageSubtitle"></p></div>
+    <div class="header-copy"><span class="eyebrow" data-i18n="localConfigurator"></span><h1 data-i18n="pageTitle"></h1><p data-i18n="pageSubtitle"></p></div>
     <label class="language"><span data-i18n="languageLabel"></span><select id="language"></select></label>
   </header>
   <main>
-    <section>
-      <h2 data-i18n="workspaceHeading"></h2>
+    <section class="section-card">
+      <div class="section-heading"><div><h2 data-i18n="workspaceHeading"></h2><p data-i18n="workspaceDescription"></p></div><span class="status-badge readonly" data-i18n="readOnlyBadge"></span></div>
       <div class="grid">
         <label><span data-i18n="workspaceName"></span><input id="workspace-name" value="modelab-workspace"></label>
         <label><span data-i18n="workspaceRoot"></span><input id="workspace-root" data-i18n-placeholder="workspaceRootPlaceholder"></label>
@@ -29,7 +29,7 @@
       <label><span class="label-line"><span data-i18n="excludes"></span><button class="help-button" type="button" data-help-key="excludePatterns" aria-expanded="false">?</button></span><textarea id="excludes" rows="2">**/.cache/**</textarea></label>
       <label><span data-i18n="manualProjects"></span><small data-i18n="manualHint"></small><textarea id="manual-projects" rows="3"></textarea></label>
     </section>
-    <section>
+    <section class="section-card">
       <div class="section-title"><h2 data-i18n="projectRoles"></h2><button id="discover" type="button" data-i18n="rediscover"></button></div>
       <p id="discovery-status" role="status" data-i18n="noDiscovery"></p>
       <div id="project-list" class="project-list"></div>
@@ -39,26 +39,26 @@
         <label><span class="label-line"><span data-i18n="targetProject"></span><button class="help-button" type="button" data-help-key="targetProject" aria-expanded="false">?</button></span><select id="target-project"></select></label>
       </div>
     </section>
-    <section><h2 data-i18n="analysisDimensions"></h2><div id="dimensions" class="checks"></div></section>
-    <section>
-      <h2 data-i18n="permissions"></h2>
+    <section class="section-card"><div class="section-heading"><div><h2 data-i18n="analysisDimensions"></h2><p data-i18n="analysisDescription"></p></div></div><div id="dimensions" class="checks option-grid"></div></section>
+    <section class="section-card">
+      <div class="section-heading"><div><h2 data-i18n="permissions"></h2><p data-i18n="permissionsDescription"></p></div><span class="status-badge readonly" data-i18n="readOnlyBadge"></span></div>
       <div class="checks permission-list">
         <label><input type="checkbox" checked disabled><span data-i18n="referenceReadonly"></span></label>
         <label><input type="checkbox" checked disabled><span data-i18n="targetReadonly"></span></label>
         <label><input id="allow-write-request" type="checkbox"><span data-i18n="allowWriteRequest"></span><button class="help-button" type="button" data-help-key="explicitAuthorization" aria-expanded="false">?</button></label>
       </div>
-      <p data-i18n="writeExplanation"></p>
+      <p class="notice readonly-notice" data-i18n="writeExplanation"></p>
     </section>
-    <section>
-      <h2 data-i18n="modulesHeading"></h2>
+    <section class="section-card">
+      <div class="section-heading"><div><h2 data-i18n="modulesHeading"></h2><p data-i18n="modulesDescription"></p></div><span class="status-badge local" data-i18n="localBadge"></span></div>
       <p data-i18n="gitPolicy"></p>
       <p data-i18n="localModuleOptional"></p>
       <div id="module-list" class="module-list"></div>
       <div class="path-row"><strong data-i18n="localModuleLocation"></strong><code id="local-modules-path"></code><button id="copy-modules-path" type="button" data-i18n="copyPath"></button></div>
       <p class="warning" data-i18n="backupWarning"></p>
     </section>
-    <section>
-      <h2 data-i18n="actions"></h2>
+    <section class="section-card action-section">
+      <div class="section-heading"><div><h2 data-i18n="actions"></h2><p data-i18n="actionsDescription"></p></div></div>
       <div class="actions"><button id="validate" type="button" data-i18n="validate"></button><button id="save" class="primary" type="button" data-i18n="save"></button></div>
       <p id="message" role="status"></p>
       <details><summary data-i18n="jsonPreview"></summary><pre id="json-output"></pre></details>

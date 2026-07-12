@@ -66,7 +66,9 @@ function setStatus(key, parameters = {}) {
 }
 
 function renderStatus() {
-  byId("message").textContent = statusMessage ? t(statusMessage.key, statusMessage.parameters) : "";
+  const message = byId("message");
+  message.textContent = statusMessage ? t(statusMessage.key, statusMessage.parameters) : "";
+  message.dataset.state = statusMessage?.key.startsWith("errors.") ? "error" : statusMessage ? "success" : "idle";
 }
 
 function setDiscoveryStatus(key, parameters = {}) {
@@ -75,7 +77,23 @@ function setDiscoveryStatus(key, parameters = {}) {
 }
 
 function renderDiscoveryStatus() {
-  byId("discovery-status").textContent = t(discoveryMessage.key, discoveryMessage.parameters);
+  const status = byId("discovery-status");
+  status.textContent = t(discoveryMessage.key, discoveryMessage.parameters);
+  status.dataset.state = discoveryMessage.key.startsWith("errors.") ? "error" : discoveryMessage.key === "discoveryResult" ? "success" : "neutral";
+}
+
+async function withBusyState(button, busyKey, operation) {
+  const originalKey = button.dataset.i18n;
+  const originalText = button.textContent;
+  button.disabled = true;
+  button.setAttribute("aria-busy", "true");
+  button.textContent = t(busyKey);
+  try { return await operation(); }
+  finally {
+    button.disabled = false;
+    button.removeAttribute("aria-busy");
+    button.textContent = originalKey ? t(originalKey) : originalText;
+  }
 }
 
 function errorKey(error) {
@@ -137,7 +155,7 @@ function renderModules() {
     const title = document.createElement("h3");
     title.textContent = localized(module.display_name) || module.id;
     const strategy = document.createElement("span");
-    strategy.className = "strategy";
+    strategy.className = `strategy ${module.distribution === "git-synced" ? "synced" : "local"}`;
     const strategyKey = module.distribution === "git-synced" ? "gitSynced" : "localOnly";
     strategy.textContent = t(strategyKey);
     const strategyWrap = document.createElement("span");
@@ -157,8 +175,9 @@ function renderModules() {
     if (module.distribution === "local-only" && module.installed !== false) {
       const button = document.createElement("button");
       button.type = "button";
+      button.className = module.enabled ? "danger-secondary" : "secondary";
       button.textContent = t(module.enabled ? "disableModule" : "enableModule");
-      button.addEventListener("click", () => toggleModule(module.id, !module.enabled));
+      button.addEventListener("click", () => withBusyState(button, "processing", () => toggleModule(module.id, !module.enabled)));
       card.append(button);
     }
     return card;
@@ -196,21 +215,21 @@ async function toggleModule(moduleId, enabled) {
 }
 
 byId("language").addEventListener("change", (event) => applyLanguage(event.target.value));
-byId("discover").addEventListener("click", async () => {
+byId("discover").addEventListener("click", () => withBusyState(byId("discover"), "discovering", async () => {
   try {
     const result = await request("/api/discover", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(configuration()) });
     projects = result.projects; discoveredAt = result.discovered_at; renderProjects();
     setDiscoveryStatus("discoveryResult", { count: projects.length, rejected: result.rejected_paths.length });
   } catch (error) { setDiscoveryStatus(errorKey(error)); }
-});
-byId("validate").addEventListener("click", async () => {
+}));
+byId("validate").addEventListener("click", () => withBusyState(byId("validate"), "validating", async () => {
   try { await request("/api/validate", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(configuration()) }); setStatus("configValid"); }
   catch (error) { setStatus(errorKey(error)); }
-});
-byId("save").addEventListener("click", async () => {
+}));
+byId("save").addEventListener("click", () => withBusyState(byId("save"), "saving", async () => {
   try { const result = await request("/api/save", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(configuration()) }); setStatus("configSaved", { path: result.saved }); }
   catch (error) { setStatus(errorKey(error)); }
-});
+}));
 byId("copy-modules-path").addEventListener("click", async () => {
   try { await navigator.clipboard.writeText(localModulesPath); setStatus("pathCopied"); }
   catch (error) { setStatus(errorKey(error)); }
