@@ -1,3 +1,5 @@
+![modeskill cover](cover.jpg)
+
 # Modeskill
 
 Modeskill is a local-first Skill for helping coding agents keep UI and interaction patterns consistent across multiple projects.
