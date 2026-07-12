@@ -51,9 +51,7 @@ header { display: flex; align-items: flex-start; justify-content: space-between;
 .language { position: relative; flex: 0 0 auto; }
 .language-trigger { display: inline-flex; align-items: center; justify-content: center; width: 42px; min-width: 42px; min-height: 42px; padding: 0; border: 0; border-radius: 50%; color: var(--muted-foreground); background: var(--surface-subtle); }
 .language-trigger:hover:not(:disabled) { border-color: transparent; color: var(--foreground); background: var(--border); }
-.globe-icon { position: relative; width: 18px; height: 18px; flex: 0 0 auto; border: 1.5px solid currentColor; border-radius: 50%; }
-.globe-icon::before { content: ""; position: absolute; top: 2px; right: 4px; bottom: 2px; left: 4px; border-right: 1px solid currentColor; border-left: 1px solid currentColor; border-radius: 50%; }
-.globe-icon::after { content: ""; position: absolute; top: 7px; right: 1px; left: 1px; border-top: 1px solid currentColor; }
+.globe-icon { width: 18px; height: 18px; flex: 0 0 auto; }
 .language-menu { position: absolute; z-index: 20; top: calc(100% + 8px); right: 0; width: 128px; padding: 5px 0; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow-float); overflow: hidden; }
 .language-menu[hidden] { display: none; }
 .language-option { width: 100%; min-height: 40px; padding: 0 16px; border: 0; border-radius: 0; text-align: left; background: transparent; font-weight: 400; }
